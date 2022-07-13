@@ -1,0 +1,4 @@
+all: generate
+
+generate:
+	$@.bash
