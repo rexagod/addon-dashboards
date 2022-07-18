@@ -29,7 +29,7 @@ data:
       "fiscalYearStartMonth": 0,
       "graphTooltip": 0,
       "id": 433,
-      "iteration": 1657632833211,
+      "iteration": 1658120053029,
       "links": [],
       "liveNow": false,
       "panels": [
@@ -373,7 +373,7 @@ data:
               },
               "editorMode": "code",
               "exemplar": false,
-              "expr": "# For the \"total # of firing alerts\" tab.\ncount by (_id) (alerts{_id=~\"$provider_cluster.*\", alertstate=\"firing\"})",
+              "expr": "# For the \"total # of firing alerts\" tab.\ncount by (_id) (alerts{_id=~\"$provider_cluster.*\", alertstate=\"firing\", alertname=~\"(^CephMdsMissingReplicas$|^CephMgrIsAbsent$|^CephMgrIsMissingReplicas$|^CephNodeDown$|^CephClusterWarningState$|^CephOSDVersionMismatch$|^CephMonVersionMismatch$|^CephOSDFlapping$|^CephOSDDiskNotResponding$|^CephOSDDiskUnavailable$|^CephDataRecoveryTakingTooLong$|^CephPGRepairTakingTooLong$|^CephMonQuorumAtRisk$|^CephClusterNearFull$|^CephClusterCriticallyFull$|^CephClusterReadOnly$|^PersistentVolumeUsageNearFull$|^PersistentVolumeUsageCritical$)\"})",
               "format": "table",
               "hide": false,
               "instant": true,
@@ -388,7 +388,7 @@ data:
               },
               "editorMode": "code",
               "exemplar": false,
-              "expr": "# For the \"In breach\" tab.\nalerts{_id=~\"$provider_cluster.*\", alertname=~\"(CephMonQuorumLost|CephClusterErrorState)\", alertstate=\"firing\"} or vector(1)",
+              "expr": "# For the \"In breach\" tab.\nalerts{_id=~\"$provider_cluster.*\", alertname=~\"(^CephMonQuorumLost$|^CephClusterErrorState$)\", alertstate=\"firing\"} or vector(1)",
               "format": "table",
               "hide": false,
               "instant": true,
@@ -484,7 +484,7 @@ data:
           "options": {
             "legend": {
               "calcs": [],
-              "displayMode": "list",
+              "displayMode": "hidden",
               "placement": "bottom"
             },
             "tooltip": {
@@ -608,7 +608,7 @@ data:
                 "properties": [
                   {
                     "id": "displayName",
-                    "value": "In breach"
+                    "value": "SLO breach"
                   },
                   {
                     "id": "mappings",
@@ -913,7 +913,7 @@ data:
               "value": "telemeter-recent-production"
             },
             "description": "Switch between staging and production data sources.",
-            "hide": 2,
+            "hide": 0,
             "includeAll": false,
             "label": "Data source",
             "multi": false,
@@ -921,7 +921,7 @@ data:
             "options": [],
             "query": "prometheus",
             "refresh": 1,
-            "regex": "telemeter-recent-production",
+            "regex": "telemeter-recent-.*",
             "skipUrlSync": false,
             "type": "datasource"
           }
@@ -935,7 +935,7 @@ data:
       "timezone": "",
       "title": "Managed Services - ODF Service Level Overview",
       "uid": "2kKW68e7k",
-      "version": 32,
+      "version": 36,
       "weekStart": ""
     }
 kind: ConfigMap
