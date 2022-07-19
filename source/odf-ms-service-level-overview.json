@@ -26,7 +26,7 @@
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
   "id": 433,
-  "iteration": 1658120053029,
+  "iteration": 1658219039760,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -420,7 +420,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${datasource}"
+        "uid": "4rNsqZfnz"
       },
       "description": "",
       "fieldConfig": {
@@ -454,19 +454,29 @@
               "mode": "none"
             },
             "thresholdsStyle": {
-              "mode": "off"
+              "mode": "line+area"
             }
           },
+          "decimals": 0,
+          "displayName": "Firing duration",
           "mappings": [],
+          "max": 360,
+          "min": 0,
+          "noValue": "0",
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
                 "color": "transparent",
                 "value": null
+              },
+              {
+                "color": "red",
+                "value": 201.6
               }
             ]
-          }
+          },
+          "unit": "m"
         },
         "overrides": []
       },
@@ -494,11 +504,11 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${datasource}"
+            "uid": "4rNsqZfnz"
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "sum(group by (_id) (alerts{_id=~\"$provider_cluster.*\", alertname=~\"(CephMonQuorumLost|CephClusterErrorState)\", alertstate=\"firing\"})) or vector(0)",
+          "expr": "sum_over_time((group by (_id) (alerts{_id=~\"$provider_cluster.*\", alertname=~\"(CephMonQuorumLost|CephClusterErrorState)\", alertstate=\"firing\"}) or vector(0))[$__range:]) * 5/60",
           "format": "time_series",
           "interval": "",
           "legendFormat": "{{label_name}}",
@@ -506,8 +516,8 @@
           "refId": "A"
         }
       ],
-      "timeFrom": "28d",
-      "title": "Clusters in breach (28d)",
+      "timeFrom": "now/M",
+      "title": "Clusters in breach (SLO: >=99.5% uptime)",
       "type": "timeseries"
     },
     {
@@ -605,7 +615,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "SLO breach"
+                "value": "In breach"
               },
               {
                 "id": "mappings",
@@ -741,7 +751,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${datasource}"
+        "uid": "4rNsqZfnz"
       },
       "description": "",
       "fieldConfig": {
@@ -775,19 +785,29 @@
               "mode": "none"
             },
             "thresholdsStyle": {
-              "mode": "off"
+              "mode": "line+area"
             }
           },
+          "decimals": 0,
+          "displayName": "Firing duration",
           "mappings": [],
+          "max": 360,
+          "min": 0,
+          "noValue": "0",
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
                 "color": "transparent",
                 "value": null
+              },
+              {
+                "color": "red",
+                "value": 201.6
               }
             ]
-          }
+          },
+          "unit": "m"
         },
         "overrides": []
       },
@@ -798,11 +818,11 @@
         "y": 13
       },
       "hideTimeOverride": false,
-      "id": 12,
+      "id": 15,
       "options": {
         "legend": {
           "calcs": [],
-          "displayMode": "list",
+          "displayMode": "hidden",
           "placement": "bottom"
         },
         "tooltip": {
@@ -815,11 +835,11 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${datasource}"
+            "uid": "4rNsqZfnz"
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "sum(group by (_id) (alerts{_id=~\"$consumer_cluster.*\", alertname=~\"(CephMonQuorumLost|CephClusterErrorState)\", alertstate=\"firing\"})) or vector(0)",
+          "expr": "sum_over_time((group by (_id) (alerts{_id=~\"$consumer_cluster.*\", alertname=~\"(CephMonQuorumLost|CephClusterErrorState)\", alertstate=\"firing\"}) or vector(0))[$__range:]) * 5/60",
           "format": "time_series",
           "interval": "",
           "legendFormat": "{{label_name}}",
@@ -827,8 +847,8 @@
           "refId": "A"
         }
       ],
-      "timeFrom": "28d",
-      "title": "Clusters in breach (28d)",
+      "timeFrom": "now/M",
+      "title": "Clusters in breach (SLO: >=99.5% uptime)",
       "type": "timeseries"
     }
   ],
@@ -905,9 +925,9 @@
       },
       {
         "current": {
-          "selected": false,
-          "text": "telemeter-recent-production",
-          "value": "telemeter-recent-production"
+          "selected": true,
+          "text": "odfms-observatorium-stage",
+          "value": "odfms-observatorium-stage"
         },
         "description": "Switch between staging and production data sources.",
         "hide": 0,
@@ -917,21 +937,22 @@
         "name": "datasource",
         "options": [],
         "query": "prometheus",
+        "queryValue": "",
         "refresh": 1,
-        "regex": "telemeter-recent-.*",
+        "regex": "odfms-observatorium-.*",
         "skipUrlSync": false,
         "type": "datasource"
       }
     ]
   },
   "time": {
-    "from": "now-30d",
+    "from": "now/M",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "Managed Services - ODF Service Level Overview",
   "uid": "2kKW68e7k",
-  "version": 36,
+  "version": 43,
   "weekStart": ""
 }

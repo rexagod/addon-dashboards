@@ -28,8 +28,7 @@ data:
       "editable": true,
       "fiscalYearStartMonth": 0,
       "graphTooltip": 0,
-      "id": 435,
-      "iteration": 1658122978823,
+      "iteration": 1658224156383,
       "links": [],
       "liveNow": false,
       "panels": [
@@ -149,7 +148,7 @@ data:
               "refId": "A"
             }
           ],
-          "timeFrom": "28d",
+          "timeFrom": "now-28d",
           "title": "Breaches",
           "type": "timeseries"
         },
@@ -281,8 +280,8 @@ data:
           {
             "current": {
               "selected": false,
-              "text": "07ae5fa0-1647-4068-b501-d6eb749dc4d5",
-              "value": "07ae5fa0-1647-4068-b501-d6eb749dc4d5"
+              "text": "6d0f91c6-8049-41d9-ac1a-c169edb669ec",
+              "value": "6d0f91c6-8049-41d9-ac1a-c169edb669ec"
             },
             "datasource": {
               "type": "prometheus",
@@ -307,9 +306,9 @@ data:
           },
           {
             "current": {
-              "selected": false,
-              "text": "telemeter-recent-production",
-              "value": "telemeter-recent-production"
+              "selected": true,
+              "text": "odfms-observatorium-stage",
+              "value": "odfms-observatorium-stage"
             },
             "description": "Switch between staging and production data sources.",
             "hide": 0,
@@ -319,29 +318,30 @@ data:
             "name": "datasource",
             "options": [],
             "query": "prometheus",
+            "queryValue": "",
             "refresh": 1,
-            "regex": "telemeter-recent-.*",
+            "regex": "odfms-observatorium-.*",
             "skipUrlSync": false,
             "type": "datasource"
           }
         ]
       },
       "time": {
-        "from": "now-30d",
+        "from": "now/M",
         "to": "now"
       },
       "timepicker": {},
       "timezone": "",
       "title": "Managed Services - ODF Cluster Status",
       "uid": "yqHFPQ6nz",
-      "version": 18,
+      "version": 19,
       "weekStart": ""
     }
 kind: ConfigMap
 metadata:
   creationTimestamp: null
-  name: grafana-dashboard-odf-ms-cluster-status
+  name: odf-ms-cluster-status
   labels:
     grafana_dashboard: "true"
   annotations:
-    grafana-folder: /grafana-dashboard-definitions/ODFMS
+    grafana-folder: /grafana-dashboard-definitions/Addons
