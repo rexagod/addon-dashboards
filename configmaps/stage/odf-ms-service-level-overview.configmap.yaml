@@ -1,0 +1,986 @@
+apiVersion: v1
+data:
+  odf-ms-service-level-overview.json: |
+    {
+      "annotations": {
+        "list": [
+          {
+            "builtIn": 1,
+            "datasource": {
+              "type": "grafana",
+              "uid": "-- Grafana --"
+            },
+            "enable": true,
+            "hide": true,
+            "iconColor": "rgba(0, 211, 255, 1)",
+            "name": "Annotations & Alerts",
+            "target": {
+              "limit": 100,
+              "matchAny": false,
+              "tags": [],
+              "type": "dashboard"
+            },
+            "type": "dashboard"
+          }
+        ]
+      },
+      "description": "Dashboard depicting Service Level Indicators and Objectives for the ODF Managed Services offering.",
+      "editable": true,
+      "fiscalYearStartMonth": 0,
+      "graphTooltip": 0,
+      "iteration": 1658921998846,
+      "links": [],
+      "liveNow": false,
+      "panels": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${telemeter_datasource}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "custom": {
+                "align": "center",
+                "displayMode": "auto",
+                "filterable": false,
+                "inspect": false
+              },
+              "decimals": 0,
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  }
+                ]
+              }
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Time"
+                },
+                "properties": [
+                  {
+                    "id": "custom.hidden",
+                    "value": true
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "name"
+                },
+                "properties": [
+                  {
+                    "id": "displayName",
+                    "value": "Deployment type"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Value"
+                },
+                "properties": [
+                  {
+                    "id": "displayName",
+                    "value": "Instances"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "name"
+                },
+                "properties": [
+                  {
+                    "id": "mappings",
+                    "value": [
+                      {
+                        "options": {
+                          "addon-ocs-consumer": {
+                            "index": 1,
+                            "text": "Consumer"
+                          },
+                          "addon-ocs-provider": {
+                            "index": 0,
+                            "text": "Provider"
+                          }
+                        },
+                        "type": "value"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Deployment type"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 429
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 4,
+            "w": 9,
+            "x": 0,
+            "y": 0
+          },
+          "id": 2,
+          "options": {
+            "footer": {
+              "fields": "",
+              "reducer": [
+                "sum"
+              ],
+              "show": false
+            },
+            "frameIndex": 1,
+            "showHeader": true,
+            "sortBy": []
+          },
+          "pluginVersion": "9.0.3",
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${telemeter_datasource}"
+              },
+              "editorMode": "builder",
+              "exemplar": false,
+              "expr": "count by(name) (subscription_sync_total{name=~\"addon-ocs-(provider|consumer)\"})",
+              "format": "table",
+              "instant": true,
+              "legendFormat": "__auto",
+              "range": false,
+              "refId": "A"
+            }
+          ],
+          "title": "Fleet view",
+          "transformations": [
+            {
+              "id": "sortBy",
+              "options": {
+                "fields": {},
+                "sort": [
+                  {
+                    "desc": true,
+                    "field": "name"
+                  }
+                ]
+              }
+            }
+          ],
+          "type": "table"
+        },
+        {
+          "collapsed": false,
+          "gridPos": {
+            "h": 1,
+            "w": 24,
+            "x": 0,
+            "y": 4
+          },
+          "id": 4,
+          "panels": [],
+          "title": "Provider",
+          "type": "row"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${observatorium_datasource}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "custom": {
+                "align": "center",
+                "displayMode": "auto",
+                "filterable": true,
+                "inspect": false
+              },
+              "decimals": 0,
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "transparent",
+                    "value": null
+                  }
+                ]
+              }
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byRegexp",
+                  "options": "^(?!(_id|alertstate|Value #A)).*$"
+                },
+                "properties": [
+                  {
+                    "id": "custom.hidden",
+                    "value": true
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "_id"
+                },
+                "properties": [
+                  {
+                    "id": "displayName",
+                    "value": "Cluster"
+                  },
+                  {
+                    "id": "links",
+                    "value": [
+                      {
+                        "targetBlank": true,
+                        "title": "",
+                        "url": "https://grafana.stage.devshift.net/d/yqHFPQ6nz/managed-services-odf-cluster-status?orgId=1&var-cluster=${__value.text}"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Value #A"
+                },
+                "properties": [
+                  {
+                    "id": "displayName",
+                    "value": "Firing alerts"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "alertstate"
+                },
+                "properties": [
+                  {
+                    "id": "displayName",
+                    "value": "In breach"
+                  },
+                  {
+                    "id": "mappings",
+                    "value": [
+                      {
+                        "options": {
+                          "firing": {
+                            "color": "dark-red",
+                            "index": 0,
+                            "text": "Yes"
+                          }
+                        },
+                        "type": "value"
+                      },
+                      {
+                        "options": {
+                          "match": "null",
+                          "result": {
+                            "index": 1,
+                            "text": "No"
+                          }
+                        },
+                        "type": "special"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "custom.displayMode",
+                    "value": "color-background-solid"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Cluster"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 350
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Firing alerts"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 186
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 9,
+            "x": 0,
+            "y": 5
+          },
+          "id": 6,
+          "options": {
+            "footer": {
+              "fields": "",
+              "reducer": [
+                "sum"
+              ],
+              "show": false
+            },
+            "showHeader": true,
+            "sortBy": []
+          },
+          "pluginVersion": "9.0.3",
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${observatorium_datasource}"
+              },
+              "editorMode": "code",
+              "exemplar": false,
+              "expr": "# For the \"total # of firing alerts\" tab.\ncount by (_id) (alerts{_id=~\"$provider_cluster.*\", alertstate=\"firing\", alertname=~\"(^CephMdsMissingReplicas$|^CephMgrIsAbsent$|^CephMgrIsMissingReplicas$|^CephNodeDown$|^CephClusterWarningState$|^CephOSDVersionMismatch$|^CephMonVersionMismatch$|^CephOSDFlapping$|^CephOSDDiskNotResponding$|^CephOSDDiskUnavailable$|^CephDataRecoveryTakingTooLong$|^CephPGRepairTakingTooLong$|^CephMonQuorumAtRisk$|^CephClusterNearFull$|^CephClusterCriticallyFull$|^CephClusterReadOnly$|^PersistentVolumeUsageNearFull$|^PersistentVolumeUsageCritical$)\"})",
+              "format": "table",
+              "hide": false,
+              "instant": true,
+              "legendFormat": "__auto",
+              "range": false,
+              "refId": "A"
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${observatorium_datasource}"
+              },
+              "editorMode": "code",
+              "exemplar": false,
+              "expr": "# For the \"In breach\" tab.\nalerts{_id=~\"$provider_cluster.*\", alertname=~\"(^CephMonQuorumLost$|^CephClusterErrorState$)\", alertstate=\"firing\"} or vector(1)",
+              "format": "table",
+              "hide": false,
+              "instant": true,
+              "legendFormat": "__auto",
+              "range": false,
+              "refId": "B"
+            }
+          ],
+          "title": "Status",
+          "transformations": [
+            {
+              "id": "seriesToColumns",
+              "options": {
+                "byField": "_id"
+              }
+            },
+            {
+              "id": "sortBy",
+              "options": {
+                "fields": {},
+                "sort": [
+                  {
+                    "desc": true,
+                    "field": "Value #A"
+                  }
+                ]
+              }
+            }
+          ],
+          "type": "table"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${observatorium_datasource}"
+          },
+          "description": "",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisGridShow": true,
+                "axisLabel": "",
+                "axisPlacement": "left",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "line+area"
+                }
+              },
+              "decimals": 0,
+              "displayName": "Firing duration",
+              "mappings": [],
+              "max": 360,
+              "min": 0,
+              "noValue": "0",
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "transparent",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 201.6
+                  }
+                ]
+              },
+              "unit": "m"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 15,
+            "x": 9,
+            "y": 5
+          },
+          "hideTimeOverride": false,
+          "id": 10,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "hidden",
+              "placement": "bottom"
+            },
+            "tooltip": {
+              "mode": "multi",
+              "sort": "desc"
+            }
+          },
+          "pluginVersion": "9.0.1",
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${observatorium_datasource}"
+              },
+              "editorMode": "code",
+              "exemplar": false,
+              "expr": "sum_over_time((group by (_id) (alerts{_id=~\"$provider_cluster.*\", alertname=~\"(CephMonQuorumLost|CephClusterErrorState)\", alertstate=\"firing\"}) or vector(0))[$__range:]) * 5/60",
+              "format": "time_series",
+              "interval": "",
+              "legendFormat": "{{label_name}}",
+              "range": true,
+              "refId": "A"
+            }
+          ],
+          "timeFrom": "now/M",
+          "title": "Clusters in breach (SLO: >=99.5% uptime)",
+          "type": "timeseries"
+        },
+        {
+          "collapsed": false,
+          "gridPos": {
+            "h": 1,
+            "w": 24,
+            "x": 0,
+            "y": 12
+          },
+          "id": 8,
+          "panels": [],
+          "title": "Consumer",
+          "type": "row"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${telemeter_datasource}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "custom": {
+                "align": "center",
+                "displayMode": "auto",
+                "filterable": true,
+                "inspect": false
+              },
+              "decimals": 0,
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "transparent",
+                    "value": null
+                  }
+                ]
+              }
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byRegexp",
+                  "options": "^(?!(_id|alertstate|Value #A)).*$"
+                },
+                "properties": [
+                  {
+                    "id": "custom.hidden",
+                    "value": true
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "_id"
+                },
+                "properties": [
+                  {
+                    "id": "displayName",
+                    "value": "Cluster"
+                  },
+                  {
+                    "id": "links",
+                    "value": [
+                      {
+                        "title": "",
+                        "url": "https://grafana.stage.devshift.net/d/yqHFPQ6nz/managed-services-odf-cluster-status?orgId=1&var-cluster=${__value.text}"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Value #A"
+                },
+                "properties": [
+                  {
+                    "id": "displayName",
+                    "value": "Firing alerts"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "alertstate"
+                },
+                "properties": [
+                  {
+                    "id": "displayName",
+                    "value": "In breach"
+                  },
+                  {
+                    "id": "mappings",
+                    "value": [
+                      {
+                        "options": {
+                          "firing": {
+                            "color": "dark-red",
+                            "index": 0,
+                            "text": "Yes"
+                          }
+                        },
+                        "type": "value"
+                      },
+                      {
+                        "options": {
+                          "match": "null",
+                          "result": {
+                            "index": 1,
+                            "text": "No"
+                          }
+                        },
+                        "type": "special"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "custom.displayMode",
+                    "value": "color-background-solid"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Cluster"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 352
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Firing alerts"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 183
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 9,
+            "x": 0,
+            "y": 13
+          },
+          "id": 11,
+          "options": {
+            "footer": {
+              "fields": "",
+              "reducer": [
+                "sum"
+              ],
+              "show": false
+            },
+            "showHeader": true,
+            "sortBy": []
+          },
+          "pluginVersion": "9.0.3",
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${telemeter_datasource}"
+              },
+              "editorMode": "code",
+              "exemplar": false,
+              "expr": "# For the \"total # of firing alerts\" tab.\ncount by (_id) (alerts{_id=~\"$consumer_cluster.*\", alertstate=\"firing\"})",
+              "format": "table",
+              "hide": false,
+              "instant": true,
+              "legendFormat": "__auto",
+              "range": false,
+              "refId": "A"
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${telemeter_datasource}"
+              },
+              "editorMode": "code",
+              "exemplar": false,
+              "expr": "# For the \"In breach\" tab.\n# APIRemovedInNextEUSReleaseInUse is only for demonstration purposed and will be removed.\nalerts{_id=~\"$consumer_cluster.*\", alertname=~\"(CephMonQuorumLost|CephClusterErrorState)\", alertstate=\"firing\"} or vector(1)",
+              "format": "table",
+              "hide": false,
+              "instant": true,
+              "legendFormat": "__auto",
+              "range": false,
+              "refId": "B"
+            }
+          ],
+          "title": "Status",
+          "transformations": [
+            {
+              "id": "seriesToColumns",
+              "options": {
+                "byField": "_id"
+              }
+            },
+            {
+              "id": "sortBy",
+              "options": {
+                "fields": {},
+                "sort": [
+                  {
+                    "desc": true,
+                    "field": "Value #A"
+                  }
+                ]
+              }
+            }
+          ],
+          "type": "table"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${observatorium_datasource}"
+          },
+          "description": "",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisGridShow": true,
+                "axisLabel": "",
+                "axisPlacement": "left",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "line+area"
+                }
+              },
+              "decimals": 0,
+              "displayName": "Firing duration",
+              "mappings": [],
+              "max": 360,
+              "min": 0,
+              "noValue": "0",
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "transparent",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 201.6
+                  }
+                ]
+              },
+              "unit": "m"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 15,
+            "x": 9,
+            "y": 13
+          },
+          "hideTimeOverride": false,
+          "id": 15,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "hidden",
+              "placement": "bottom"
+            },
+            "tooltip": {
+              "mode": "multi",
+              "sort": "desc"
+            }
+          },
+          "pluginVersion": "9.0.1",
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${observatorium_datasource}"
+              },
+              "editorMode": "code",
+              "exemplar": false,
+              "expr": "sum_over_time((group by (_id) (alerts{_id=~\"$consumer_cluster.*\", alertname=~\"(CephMonQuorumLost|CephClusterErrorState)\", alertstate=\"firing\"}) or vector(0))[$__range:]) * 5/60",
+              "format": "time_series",
+              "interval": "",
+              "legendFormat": "{{label_name}}",
+              "range": true,
+              "refId": "A"
+            }
+          ],
+          "timeFrom": "now/M",
+          "title": "Clusters in breach (SLO: >=99.5% uptime)",
+          "type": "timeseries"
+        }
+      ],
+      "refresh": "",
+      "schemaVersion": 36,
+      "style": "dark",
+      "tags": [],
+      "templating": {
+        "list": [
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "tuHy3WB7z"
+            },
+            "filters": [],
+            "hide": 0,
+            "name": "Filters",
+            "skipUrlSync": false,
+            "type": "adhoc"
+          },
+          {
+            "current": {
+              "selected": false,
+              "text": "All",
+              "value": "$__all"
+            },
+            "datasource": {
+              "type": "prometheus",
+              "uid": "tuHy3WB7z"
+            },
+            "definition": "label_values(subscription_sync_total{name=\"addon-ocs-provider\"}, _id)",
+            "hide": 2,
+            "includeAll": true,
+            "label": "Provider cluster ID",
+            "multi": false,
+            "name": "provider_cluster",
+            "options": [],
+            "query": {
+              "query": "label_values(subscription_sync_total{name=\"addon-ocs-provider\"}, _id)",
+              "refId": "StandardVariableQuery"
+            },
+            "refresh": 1,
+            "regex": "",
+            "skipUrlSync": false,
+            "sort": 0,
+            "type": "query"
+          },
+          {
+            "current": {
+              "selected": false,
+              "text": "All",
+              "value": "$__all"
+            },
+            "datasource": {
+              "type": "prometheus",
+              "uid": "tuHy3WB7z"
+            },
+            "definition": "label_values(subscription_sync_total{name=\"addon-ocs-consumer\"}, _id)",
+            "hide": 2,
+            "includeAll": true,
+            "label": "Consumer cluster ID",
+            "multi": false,
+            "name": "consumer_cluster",
+            "options": [],
+            "query": {
+              "query": "label_values(subscription_sync_total{name=\"addon-ocs-consumer\"}, _id)",
+              "refId": "StandardVariableQuery"
+            },
+            "refresh": 1,
+            "regex": "",
+            "skipUrlSync": false,
+            "sort": 0,
+            "type": "query"
+          },
+          {
+            "current": {
+              "selected": false,
+              "text": "odfms-observatorium-stage",
+              "value": "odfms-observatorium-stage"
+            },
+            "description": "Switch between staging and production data sources.",
+            "hide": 0,
+            "includeAll": false,
+            "label": "Data source",
+            "multi": false,
+            "name": "observatorium_datasource",
+            "options": [],
+            "query": "prometheus",
+            "queryValue": "",
+            "refresh": 1,
+            "regex": "odfms-observatorium-.*",
+            "skipUrlSync": false,
+            "type": "datasource"
+          },
+          {
+            "current": {
+              "selected": true,
+              "text": "telemeter-recent-stage",
+              "value": "telemeter-recent-stage"
+            },
+            "hide": 0,
+            "includeAll": false,
+            "multi": false,
+            "name": "telemeter_datasource",
+            "options": [],
+            "query": "prometheus",
+            "queryValue": "",
+            "refresh": 1,
+            "regex": "telemeter-recent-.*",
+            "skipUrlSync": false,
+            "type": "datasource"
+          }
+        ]
+      },
+      "time": {
+        "from": "now/M",
+        "to": "now"
+      },
+      "timepicker": {},
+      "timezone": "",
+      "title": "Managed Services - ODF Service Level Overview",
+      "uid": "2kKW68e7k",
+      "version": 46,
+      "weekStart": ""
+    }
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: odf-ms-service-level-overview
+  labels:
+    grafana_dashboard: "true"
+  annotations:
+    grafana-folder: /grafana-dashboard-definitions/Addons
