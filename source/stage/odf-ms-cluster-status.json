@@ -25,7 +25,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "iteration": 1658226503461,
+  "iteration": 1658224156383,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -303,12 +303,12 @@
       },
       {
         "current": {
-          "selected": false,
-          "text": "odfms-observatorium-production",
-          "value": "odfms-observatorium-production"
+          "selected": true,
+          "text": "odfms-observatorium-stage",
+          "value": "odfms-observatorium-stage"
         },
         "description": "Switch between staging and production data sources.",
-        "hide": 2,
+        "hide": 0,
         "includeAll": false,
         "label": "Data source",
         "multi": false,
@@ -317,7 +317,7 @@
         "query": "prometheus",
         "queryValue": "",
         "refresh": 1,
-        "regex": "odfms-observatorium-production",
+        "regex": "odfms-observatorium-.*",
         "skipUrlSync": false,
         "type": "datasource"
       }
@@ -331,6 +331,6 @@
   "timezone": "",
   "title": "Managed Services - ODF Cluster Status",
   "uid": "yqHFPQ6nz",
-  "version": 1,
+  "version": 19,
   "weekStart": ""
 }

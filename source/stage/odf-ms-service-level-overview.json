@@ -25,15 +25,14 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 433,
-  "iteration": 1658226400805,
+  "iteration": 1658921998846,
   "links": [],
   "liveNow": false,
   "panels": [
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${datasource}"
+        "uid": "${telemeter_datasource}"
       },
       "fieldConfig": {
         "defaults": {
@@ -154,12 +153,12 @@
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "9.0.1",
+      "pluginVersion": "9.0.3",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${datasource}"
+            "uid": "${telemeter_datasource}"
           },
           "editorMode": "builder",
           "exemplar": false,
@@ -204,7 +203,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${datasource}"
+        "uid": "${observatorium_datasource}"
       },
       "fieldConfig": {
         "defaults": {
@@ -361,12 +360,12 @@
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "9.0.1",
+      "pluginVersion": "9.0.3",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${datasource}"
+            "uid": "${observatorium_datasource}"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -381,7 +380,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${datasource}"
+            "uid": "${observatorium_datasource}"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -420,7 +419,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "4rNsqZfnz"
+        "uid": "${observatorium_datasource}"
       },
       "description": "",
       "fieldConfig": {
@@ -504,7 +503,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "4rNsqZfnz"
+            "uid": "${observatorium_datasource}"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -536,7 +535,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${datasource}"
+        "uid": "${telemeter_datasource}"
       },
       "fieldConfig": {
         "defaults": {
@@ -692,12 +691,12 @@
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "9.0.1",
+      "pluginVersion": "9.0.3",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${datasource}"
+            "uid": "${telemeter_datasource}"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -712,7 +711,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${datasource}"
+            "uid": "${telemeter_datasource}"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -751,7 +750,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "4rNsqZfnz"
+        "uid": "${observatorium_datasource}"
       },
       "description": "",
       "fieldConfig": {
@@ -835,7 +834,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "4rNsqZfnz"
+            "uid": "${observatorium_datasource}"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -926,20 +925,38 @@
       {
         "current": {
           "selected": false,
-          "text": "odfms-observatorium-production",
-          "value": "odfms-observatorium-production"
+          "text": "odfms-observatorium-stage",
+          "value": "odfms-observatorium-stage"
         },
         "description": "Switch between staging and production data sources.",
-        "hide": 2,
+        "hide": 0,
         "includeAll": false,
         "label": "Data source",
         "multi": false,
-        "name": "datasource",
+        "name": "observatorium_datasource",
         "options": [],
         "query": "prometheus",
         "queryValue": "",
         "refresh": 1,
-        "regex": "odfms-observatorium-production",
+        "regex": "odfms-observatorium-.*",
+        "skipUrlSync": false,
+        "type": "datasource"
+      },
+      {
+        "current": {
+          "selected": true,
+          "text": "telemeter-recent-stage",
+          "value": "telemeter-recent-stage"
+        },
+        "hide": 0,
+        "includeAll": false,
+        "multi": false,
+        "name": "telemeter_datasource",
+        "options": [],
+        "query": "prometheus",
+        "queryValue": "",
+        "refresh": 1,
+        "regex": "telemeter-recent-.*",
         "skipUrlSync": false,
         "type": "datasource"
       }
@@ -953,6 +970,6 @@
   "timezone": "",
   "title": "Managed Services - ODF Service Level Overview",
   "uid": "2kKW68e7k",
-  "version": 44,
+  "version": 46,
   "weekStart": ""
 }
