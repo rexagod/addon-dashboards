@@ -25,7 +25,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "iteration": 1658224156383,
+  "iteration": 1659627314041,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -45,7 +45,7 @@
         "alertInstanceLabelFilter": "alertname=~\"(^CephMonQuorumLost$|^CephClusterErrorState$)\"",
         "alertName": "",
         "dashboardAlerts": false,
-        "datasource": "",
+        "datasource": "telemeter-recent-production",
         "groupBy": [],
         "groupMode": "default",
         "maxItems": 20,
@@ -165,7 +165,7 @@
         "alertInstanceLabelFilter": "{alertname=~\"(^CephMdsMissingReplicas$|^CephMgrIsAbsent$|^CephMgrIsMissingReplicas$|^CephNodeDown$|^CephClusterWarningState$|^CephOSDVersionMismatch$|^CephMonVersionMismatch$|^CephOSDFlapping$|^CephOSDDiskNotResponding$|^CephOSDDiskUnavailable$|^CephDataRecoveryTakingTooLong$|^CephPGRepairTakingTooLong$|^CephMonQuorumAtRisk$|^CephClusterNearFull$|^CephClusterCriticallyFull$|^CephClusterReadOnly$|^PersistentVolumeUsageNearFull$|^PersistentVolumeUsageCritical$)\"}",
         "alertName": "",
         "dashboardAlerts": false,
-        "datasource": "",
+        "datasource": "telemeter-recent-production",
         "groupBy": [],
         "groupMode": "default",
         "maxItems": 20,
@@ -282,7 +282,7 @@
         },
         "datasource": {
           "type": "prometheus",
-          "uid": "tuHy3WB7z"
+          "uid": "${datasource}"
         },
         "definition": "label_values(subscription_sync_total{name=~\"addon-ocs-(provider|consumer)\"}, _id)",
         "hide": 0,
@@ -303,12 +303,12 @@
       },
       {
         "current": {
-          "selected": true,
-          "text": "odfms-observatorium-stage",
-          "value": "odfms-observatorium-stage"
+          "selected": false,
+          "text": "telemeter-recent-production",
+          "value": "telemeter-recent-production"
         },
         "description": "Switch between staging and production data sources.",
-        "hide": 0,
+        "hide": 2,
         "includeAll": false,
         "label": "Data source",
         "multi": false,
@@ -317,7 +317,7 @@
         "query": "prometheus",
         "queryValue": "",
         "refresh": 1,
-        "regex": "odfms-observatorium-.*",
+        "regex": "telemeter-recent-production",
         "skipUrlSync": false,
         "type": "datasource"
       }
@@ -331,6 +331,6 @@
   "timezone": "",
   "title": "Managed Services - ODF Cluster Status",
   "uid": "yqHFPQ6nz",
-  "version": 19,
+  "version": 1,
   "weekStart": ""
 }

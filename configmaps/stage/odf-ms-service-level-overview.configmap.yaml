@@ -2,43 +2,6 @@ apiVersion: v1
 data:
   odf-ms-service-level-overview.json: |-
     {
-      "__inputs": [
-        {
-          "name": "DS_TELEMETER-RECENT-STAGE",
-          "label": "telemeter-recent-stage",
-          "description": "",
-          "type": "datasource",
-          "pluginId": "prometheus",
-          "pluginName": "Prometheus"
-        }
-      ],
-      "__elements": {},
-      "__requires": [
-        {
-          "type": "grafana",
-          "id": "grafana",
-          "name": "Grafana",
-          "version": "9.0.3"
-        },
-        {
-          "type": "datasource",
-          "id": "prometheus",
-          "name": "Prometheus",
-          "version": "1.0.0"
-        },
-        {
-          "type": "panel",
-          "id": "table",
-          "name": "Table",
-          "version": ""
-        },
-        {
-          "type": "panel",
-          "id": "timeseries",
-          "name": "Time series",
-          "version": ""
-        }
-      ],
       "annotations": {
         "list": [
           {
@@ -65,8 +28,7 @@ data:
       "editable": true,
       "fiscalYearStartMonth": 0,
       "graphTooltip": 0,
-      "id": null,
-      "iteration": 1659623188720,
+      "iteration": 1659626627196,
       "links": [],
       "liveNow": false,
       "panels": [
@@ -244,7 +206,7 @@ data:
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_TELEMETER-RECENT-STAGE}"
+            "uid": "${telemeter_datasource}"
           },
           "fieldConfig": {
             "defaults": {
@@ -406,7 +368,7 @@ data:
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "${DS_TELEMETER-RECENT-STAGE}"
+                "uid": "${telemeter_datasource}"
               },
               "editorMode": "code",
               "exemplar": false,
@@ -421,7 +383,7 @@ data:
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "${DS_TELEMETER-RECENT-STAGE}"
+                "uid": "${telemeter_datasource}"
               },
               "editorMode": "code",
               "exemplar": false,
@@ -460,7 +422,7 @@ data:
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_TELEMETER-RECENT-STAGE}"
+            "uid": "${telemeter_datasource}"
           },
           "description": "",
           "fieldConfig": {
@@ -544,7 +506,7 @@ data:
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "${DS_TELEMETER-RECENT-STAGE}"
+                "uid": "${telemeter_datasource}"
               },
               "editorMode": "code",
               "exemplar": false,
@@ -576,7 +538,7 @@ data:
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_TELEMETER-RECENT-STAGE}"
+            "uid": "${telemeter_datasource}"
           },
           "fieldConfig": {
             "defaults": {
@@ -737,7 +699,7 @@ data:
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "${DS_TELEMETER-RECENT-STAGE}"
+                "uid": "${telemeter_datasource}"
               },
               "editorMode": "code",
               "exemplar": false,
@@ -752,7 +714,7 @@ data:
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "${DS_TELEMETER-RECENT-STAGE}"
+                "uid": "${telemeter_datasource}"
               },
               "editorMode": "code",
               "exemplar": false,
@@ -791,7 +753,7 @@ data:
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_TELEMETER-RECENT-STAGE}"
+            "uid": "${telemeter_datasource}"
           },
           "description": "",
           "fieldConfig": {
@@ -875,7 +837,7 @@ data:
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "${DS_TELEMETER-RECENT-STAGE}"
+                "uid": "${telemeter_datasource}"
               },
               "editorMode": "code",
               "exemplar": false,
@@ -910,10 +872,14 @@ data:
             "type": "adhoc"
           },
           {
-            "current": {},
+            "current": {
+              "selected": false,
+              "text": "All",
+              "value": "$__all"
+            },
             "datasource": {
               "type": "prometheus",
-              "uid": "${DS_TELEMETER-RECENT-STAGE}"
+              "uid": "${telemeter_datasource}"
             },
             "definition": "label_values(subscription_sync_total{name=\"addon-ocs-provider\"}, _id)",
             "hide": 2,
@@ -933,10 +899,14 @@ data:
             "type": "query"
           },
           {
-            "current": {},
+            "current": {
+              "selected": false,
+              "text": "All",
+              "value": "$__all"
+            },
             "datasource": {
               "type": "prometheus",
-              "uid": "${DS_TELEMETER-RECENT-STAGE}"
+              "uid": "${telemeter_datasource}"
             },
             "definition": "label_values(subscription_sync_total{name=\"addon-ocs-consumer\"}, _id)",
             "hide": 2,
@@ -984,7 +954,7 @@ data:
       "timezone": "",
       "title": "Managed Services - ODF Service Level Overview",
       "uid": "2kKW68e7k",
-      "version": 1,
+      "version": 2,
       "weekStart": ""
     }
 kind: ConfigMap

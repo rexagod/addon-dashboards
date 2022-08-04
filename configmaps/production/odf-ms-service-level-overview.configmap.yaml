@@ -2,43 +2,6 @@ apiVersion: v1
 data:
   odf-ms-service-level-overview.json: |-
     {
-      "__inputs": [
-        {
-          "name": "DS_TELEMETER-RECENT-PRODUCTION",
-          "label": "telemeter-recent-production",
-          "description": "",
-          "type": "datasource",
-          "pluginId": "prometheus",
-          "pluginName": "Prometheus"
-        }
-      ],
-      "__elements": {},
-      "__requires": [
-        {
-          "type": "grafana",
-          "id": "grafana",
-          "name": "Grafana",
-          "version": "9.0.3"
-        },
-        {
-          "type": "datasource",
-          "id": "prometheus",
-          "name": "Prometheus",
-          "version": "1.0.0"
-        },
-        {
-          "type": "panel",
-          "id": "table",
-          "name": "Table",
-          "version": ""
-        },
-        {
-          "type": "panel",
-          "id": "timeseries",
-          "name": "Time series",
-          "version": ""
-        }
-      ],
       "annotations": {
         "list": [
           {
@@ -65,15 +28,14 @@ data:
       "editable": true,
       "fiscalYearStartMonth": 0,
       "graphTooltip": 0,
-      "id": null,
-      "iteration": 1659623198116,
+      "iteration": 1659626556318,
       "links": [],
       "liveNow": false,
       "panels": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_TELEMETER-RECENT-PRODUCTION}"
+            "uid": "${telemeter_datasource}"
           },
           "fieldConfig": {
             "defaults": {
@@ -199,9 +161,9 @@ data:
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "${DS_TELEMETER-RECENT-PRODUCTION}"
+                "uid": "${telemeter_datasource}"
               },
-              "editorMode": "code",
+              "editorMode": "builder",
               "exemplar": false,
               "expr": "count by(name) (subscription_sync_total{name=~\"addon-ocs-(provider|consumer)\"})",
               "format": "table",
@@ -244,7 +206,7 @@ data:
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_TELEMETER-RECENT-PRODUCTION}"
+            "uid": "${telemeter_datasource}"
           },
           "fieldConfig": {
             "defaults": {
@@ -406,7 +368,7 @@ data:
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "${DS_TELEMETER-RECENT-PRODUCTION}"
+                "uid": "${telemeter_datasource}"
               },
               "editorMode": "code",
               "exemplar": false,
@@ -421,7 +383,7 @@ data:
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "${DS_TELEMETER-RECENT-PRODUCTION}"
+                "uid": "${telemeter_datasource}"
               },
               "editorMode": "code",
               "exemplar": false,
@@ -460,7 +422,7 @@ data:
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_TELEMETER-RECENT-PRODUCTION}"
+            "uid": "${telemeter_datasource}"
           },
           "description": "",
           "fieldConfig": {
@@ -544,7 +506,7 @@ data:
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "${DS_TELEMETER-RECENT-PRODUCTION}"
+                "uid": "${telemeter_datasource}"
               },
               "editorMode": "code",
               "exemplar": false,
@@ -576,7 +538,7 @@ data:
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_TELEMETER-RECENT-PRODUCTION}"
+            "uid": "${telemeter_datasource}"
           },
           "fieldConfig": {
             "defaults": {
@@ -629,7 +591,7 @@ data:
                     "value": [
                       {
                         "title": "",
-                        "url": "https://grafana.stage.devshift.net/d/yqHFPQ6nz/managed-services-odf-cluster-status?orgId=1&var-cluster=${__value.text}"
+                        "url": "https://grafana.app-sre.devshift.net/d/yqHFPQ6nz/managed-services-odf-cluster-status?orgId=1&var-cluster=${__value.text}"
                       }
                     ]
                   }
@@ -737,11 +699,11 @@ data:
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "${DS_TELEMETER-RECENT-PRODUCTION}"
+                "uid": "${telemeter_datasource}"
               },
               "editorMode": "code",
               "exemplar": false,
-              "expr": "# For the \"total # of firing alerts\" tab.\ncount by (_id) (alerts{_id=~\"$consumer_cluster.*\", alertstate=\"firing\", alertname=~\"(^CephMdsMissingReplicas$|^CephMgrIsAbsent$|^CephMgrIsMissingReplicas$|^CephNodeDown$|^CephClusterWarningState$|^CephOSDVersionMismatch$|^CephMonVersionMismatch$|^CephOSDFlapping$|^CephOSDDiskNotResponding$|^CephOSDDiskUnavailable$|^CephDataRecoveryTakingTooLong$|^CephPGRepairTakingTooLong$|^CephMonQuorumAtRisk$|^CephClusterNearFull$|^CephClusterCriticallyFull$|^CephClusterReadOnly$|^PersistentVolumeUsageNearFull$|^PersistentVolumeUsageCritical$)\"})",
+              "expr": "# For the \"total # of firing alerts\" tab.\ncount by (_id) (alerts{_id=~\"$consumer_cluster.*\", alertstate=\"firing\"})",
               "format": "table",
               "hide": false,
               "instant": true,
@@ -752,7 +714,7 @@ data:
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "${DS_TELEMETER-RECENT-PRODUCTION}"
+                "uid": "${telemeter_datasource}"
               },
               "editorMode": "code",
               "exemplar": false,
@@ -791,7 +753,7 @@ data:
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_TELEMETER-RECENT-PRODUCTION}"
+            "uid": "${telemeter_datasource}"
           },
           "description": "",
           "fieldConfig": {
@@ -875,7 +837,7 @@ data:
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "${DS_TELEMETER-RECENT-PRODUCTION}"
+                "uid": "${telemeter_datasource}"
               },
               "editorMode": "code",
               "exemplar": false,
@@ -910,10 +872,14 @@ data:
             "type": "adhoc"
           },
           {
-            "current": {},
+            "current": {
+              "selected": false,
+              "text": "All",
+              "value": "$__all"
+            },
             "datasource": {
               "type": "prometheus",
-              "uid": "${DS_TELEMETER-RECENT-PRODUCTION}"
+              "uid": "${telemeter_datasource}"
             },
             "definition": "label_values(subscription_sync_total{name=\"addon-ocs-provider\"}, _id)",
             "hide": 2,
@@ -933,10 +899,14 @@ data:
             "type": "query"
           },
           {
-            "current": {},
+            "current": {
+              "selected": false,
+              "text": "All",
+              "value": "$__all"
+            },
             "datasource": {
               "type": "prometheus",
-              "uid": "${DS_TELEMETER-RECENT-PRODUCTION}"
+              "uid": "${telemeter_datasource}"
             },
             "definition": "label_values(subscription_sync_total{name=\"addon-ocs-consumer\"}, _id)",
             "hide": 2,
@@ -963,13 +933,14 @@ data:
             },
             "hide": 2,
             "includeAll": false,
+            "label": "",
             "multi": false,
             "name": "telemeter_datasource",
             "options": [],
             "query": "prometheus",
             "queryValue": "",
             "refresh": 1,
-            "regex": "telemeter-recent-prod.*",
+            "regex": "telemeter-recent-production",
             "skipUrlSync": false,
             "type": "datasource"
           }
