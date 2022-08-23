@@ -25,7 +25,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "iteration": 1659629436825,
+  "iteration": 1661265512183,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -35,7 +35,7 @@
         "uid": "tuHy3WB7z"
       },
       "gridPos": {
-        "h": 6,
+        "h": 10,
         "w": 10,
         "x": 0,
         "y": 0
@@ -45,7 +45,7 @@
         "alertInstanceLabelFilter": "alertname=~\"(^CephMonQuorumLost$|^CephClusterErrorState$)\"",
         "alertName": "",
         "dashboardAlerts": false,
-        "datasource": "telemeter-recent-production",
+        "datasource": "telemeter-recent-stage",
         "groupBy": [],
         "groupMode": "default",
         "maxItems": 20,
@@ -155,17 +155,17 @@
         "uid": "tuHy3WB7z"
       },
       "gridPos": {
-        "h": 14,
+        "h": 12,
         "w": 10,
         "x": 0,
-        "y": 6
+        "y": 10
       },
       "id": 9,
       "options": {
         "alertInstanceLabelFilter": "{alertname=~\"(^CephMdsMissingReplicas$|^CephMgrIsAbsent$|^CephMgrIsMissingReplicas$|^CephNodeDown$|^CephClusterWarningState$|^CephOSDVersionMismatch$|^CephMonVersionMismatch$|^CephOSDFlapping$|^CephOSDDiskNotResponding$|^CephOSDDiskUnavailable$|^CephDataRecoveryTakingTooLong$|^CephPGRepairTakingTooLong$|^CephMonQuorumAtRisk$|^CephClusterNearFull$|^CephClusterCriticallyFull$|^CephClusterReadOnly$|^PersistentVolumeUsageNearFull$|^PersistentVolumeUsageCritical$)\"}",
         "alertName": "",
         "dashboardAlerts": false,
-        "datasource": "telemeter-recent-production",
+        "datasource": "telemeter-recent-stage",
         "groupBy": [],
         "groupMode": "default",
         "maxItems": 20,
@@ -233,7 +233,7 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 10,
+        "h": 12,
         "w": 14,
         "x": 10,
         "y": 10
@@ -277,8 +277,8 @@
       {
         "current": {
           "selected": false,
-          "text": "6d0f91c6-8049-41d9-ac1a-c169edb669ec",
-          "value": "6d0f91c6-8049-41d9-ac1a-c169edb669ec"
+          "text": "be90ee2c-940b-4c58-b42d-fb1bf0c680e0",
+          "value": "be90ee2c-940b-4c58-b42d-fb1bf0c680e0"
         },
         "datasource": {
           "type": "prometheus",
@@ -303,9 +303,9 @@
       },
       {
         "current": {
-          "selected": false,
-          "text": "telemeter-recent-production",
-          "value": "telemeter-recent-production"
+          "selected": true,
+          "text": "telemeter-recent-stage",
+          "value": "telemeter-recent-stage"
         },
         "description": "Switch between staging and production data sources.",
         "hide": 0,
@@ -317,7 +317,7 @@
         "query": "prometheus",
         "queryValue": "",
         "refresh": 1,
-        "regex": "telemeter-recent-production",
+        "regex": "telemeter-recent-.*",
         "skipUrlSync": false,
         "type": "datasource"
       }
@@ -331,6 +331,6 @@
   "timezone": "",
   "title": "Managed Services - ODF Cluster Status",
   "uid": "yqHFPQ6nz",
-  "version": 1,
+  "version": 3,
   "weekStart": ""
 }

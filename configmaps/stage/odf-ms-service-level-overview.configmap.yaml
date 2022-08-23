@@ -1,6 +1,6 @@
 apiVersion: v1
 data:
-  odf-ms-service-level-overview.json: |-
+  odf-ms-service-level-overview.json: |
     {
       "annotations": {
         "list": [
@@ -28,14 +28,14 @@ data:
       "editable": true,
       "fiscalYearStartMonth": 0,
       "graphTooltip": 0,
-      "iteration": 1659626627196,
+      "iteration": 1661269722273,
       "links": [],
       "liveNow": false,
       "panels": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_TELEMETER-RECENT-STAGE}"
+            "uid": "${telemeter_datasource}"
           },
           "fieldConfig": {
             "defaults": {
@@ -161,7 +161,7 @@ data:
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "${DS_TELEMETER-RECENT-STAGE}"
+                "uid": "${telemeter_datasource}"
               },
               "editorMode": "code",
               "exemplar": false,
@@ -372,7 +372,7 @@ data:
               },
               "editorMode": "code",
               "exemplar": false,
-              "expr": "# For the \"total # of firing alerts\" tab.\ncount by (_id) (alerts{_id=~\"$provider_cluster.*\", alertstate=\"firing\", alertname=~\"(^CephMdsMissingReplicas$|^CephMgrIsAbsent$|^CephMgrIsMissingReplicas$|^CephNodeDown$|^CephClusterWarningState$|^CephOSDVersionMismatch$|^CephMonVersionMismatch$|^CephOSDFlapping$|^CephOSDDiskNotResponding$|^CephOSDDiskUnavailable$|^CephDataRecoveryTakingTooLong$|^CephPGRepairTakingTooLong$|^CephMonQuorumAtRisk$|^CephClusterNearFull$|^CephClusterCriticallyFull$|^CephClusterReadOnly$|^PersistentVolumeUsageNearFull$|^PersistentVolumeUsageCritical$)\"})",
+              "expr": "# For the \"total # of firing alerts\" column.\ncount by (_id) (alerts{_id=~\"$provider_cluster.*\", alertname=~\"(^CephMdsMissingReplicas$|^CephMgrIsAbsent$|^CephMgrIsMissingReplicas$|^CephNodeDown$|^CephClusterWarningState$|^CephOSDVersionMismatch$|^CephMonVersionMismatch$|^CephOSDFlapping$|^CephOSDDiskNotResponding$|^CephOSDDiskUnavailable$|^CephDataRecoveryTakingTooLong$|^CephPGRepairTakingTooLong$|^CephMonQuorumAtRisk$|^CephClusterNearFull$|^CephClusterCriticallyFull$|^CephClusterReadOnly$|^CephMonQuorumLost$|^CephClusterErrorState$)\", alertstate=\"firing\"})",
               "format": "table",
               "hide": false,
               "instant": true,
@@ -387,13 +387,28 @@ data:
               },
               "editorMode": "code",
               "exemplar": false,
-              "expr": "# For the \"In breach\" tab.\nalerts{_id=~\"$provider_cluster.*\", alertname=~\"(^CephMonQuorumLost$|^CephClusterErrorState$)\", alertstate=\"firing\"} or vector(1)",
+              "expr": "# For the \"In breach\" column.\nalerts{_id=~\"$provider_cluster.*\", alertname=~\"(^CephMonQuorumLost$|^CephClusterErrorState$)\", alertstate=\"firing\"}",
               "format": "table",
               "hide": false,
               "instant": true,
               "legendFormat": "__auto",
               "range": false,
               "refId": "B"
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${telemeter_datasource}"
+              },
+              "editorMode": "code",
+              "exemplar": false,
+              "expr": "# For the \"Cluster\" column.\ngroup(subscription_sync_total{name=\"addon-ocs-provider\"}) by (_id)",
+              "format": "table",
+              "hide": false,
+              "instant": true,
+              "legendFormat": "__auto",
+              "range": false,
+              "refId": "C"
             }
           ],
           "title": "Status",
@@ -456,13 +471,12 @@ data:
                   "mode": "none"
                 },
                 "thresholdsStyle": {
-                  "mode": "line+area"
+                  "mode": "off"
                 }
               },
               "decimals": 0,
-              "displayName": "Firing duration",
+              "displayName": "Clusters in breach",
               "mappings": [],
-              "max": 360,
               "min": 0,
               "noValue": "0",
               "thresholds": {
@@ -471,14 +485,10 @@ data:
                   {
                     "color": "transparent",
                     "value": null
-                  },
-                  {
-                    "color": "red",
-                    "value": 201.6
                   }
                 ]
               },
-              "unit": "m"
+              "unit": "none"
             },
             "overrides": []
           },
@@ -510,7 +520,7 @@ data:
               },
               "editorMode": "code",
               "exemplar": false,
-              "expr": "sum_over_time((group by (_id) (alerts{_id=~\"$provider_cluster.*\", alertname=~\"(CephMonQuorumLost|CephClusterErrorState)\", alertstate=\"firing\"}) or vector(0))[$__range:]) * 5/60",
+              "expr": "sum(group by (_id) (alerts{_id=~\"$provider_cluster.*\", alertname=~\"(CephMonQuorumLost|CephClusterErrorState)\", alertstate=\"firing\"})) or vector(0)",
               "format": "time_series",
               "interval": "",
               "legendFormat": "{{label_name}}",
@@ -519,7 +529,7 @@ data:
             }
           ],
           "timeFrom": "now/M",
-          "title": "Clusters in breach (SLO: >=99.5% uptime)",
+          "title": "Clusters in breach",
           "type": "timeseries"
         },
         {
@@ -703,7 +713,7 @@ data:
               },
               "editorMode": "code",
               "exemplar": false,
-              "expr": "# For the \"total # of firing alerts\" tab.\ncount by (_id) (alerts{_id=~\"$consumer_cluster.*\", alertstate=\"firing\", alertname=~\"(^CephMdsMissingReplicas$|^CephMgrIsAbsent$|^CephMgrIsMissingReplicas$|^CephNodeDown$|^CephClusterWarningState$|^CephOSDVersionMismatch$|^CephMonVersionMismatch$|^CephOSDFlapping$|^CephOSDDiskNotResponding$|^CephOSDDiskUnavailable$|^CephDataRecoveryTakingTooLong$|^CephPGRepairTakingTooLong$|^CephMonQuorumAtRisk$|^CephClusterNearFull$|^CephClusterCriticallyFull$|^CephClusterReadOnly$|^PersistentVolumeUsageNearFull$|^PersistentVolumeUsageCritical$)\"})",
+              "expr": "# For the \"total # of firing alerts\" column.\ncount by (_id) (alerts{_id=~\"$consumer_cluster.*\", alertname=~\"(^PersistentVolumeUsageNearFull$|^PersistentVolumeUsageCritical$|^CephMonQuorumLost$|^CephClusterErrorState$)\", alertstate=\"firing\"})",
               "format": "table",
               "hide": false,
               "instant": true,
@@ -718,13 +728,28 @@ data:
               },
               "editorMode": "code",
               "exemplar": false,
-              "expr": "# For the \"In breach\" tab.\n# APIRemovedInNextEUSReleaseInUse is only for demonstration purposed and will be removed.\nalerts{_id=~\"$consumer_cluster.*\", alertname=~\"(CephMonQuorumLost|CephClusterErrorState)\", alertstate=\"firing\"} or vector(1)",
+              "expr": "# For the \"In breach\" column.\nalerts{_id=~\"$consumer_cluster.*\", alertname=~\"(^CephMonQuorumLost$|^CephClusterErrorState$)\", alertstate=\"firing\"}",
               "format": "table",
               "hide": false,
               "instant": true,
               "legendFormat": "__auto",
               "range": false,
               "refId": "B"
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${telemeter_datasource}"
+              },
+              "editorMode": "code",
+              "exemplar": false,
+              "expr": "# For the \"Cluster\" column.\ngroup(subscription_sync_total{name=\"addon-ocs-consumer\"}) by (_id)",
+              "format": "table",
+              "hide": false,
+              "instant": true,
+              "legendFormat": "__auto",
+              "range": false,
+              "refId": "C"
             }
           ],
           "title": "Status",
@@ -787,13 +812,12 @@ data:
                   "mode": "none"
                 },
                 "thresholdsStyle": {
-                  "mode": "line+area"
+                  "mode": "off"
                 }
               },
               "decimals": 0,
-              "displayName": "Firing duration",
+              "displayName": "Clusters in breach",
               "mappings": [],
-              "max": 360,
               "min": 0,
               "noValue": "0",
               "thresholds": {
@@ -802,14 +826,10 @@ data:
                   {
                     "color": "transparent",
                     "value": null
-                  },
-                  {
-                    "color": "red",
-                    "value": 201.6
                   }
                 ]
               },
-              "unit": "m"
+              "unit": "none"
             },
             "overrides": []
           },
@@ -820,7 +840,7 @@ data:
             "y": 13
           },
           "hideTimeOverride": false,
-          "id": 15,
+          "id": 16,
           "options": {
             "legend": {
               "calcs": [],
@@ -841,7 +861,7 @@ data:
               },
               "editorMode": "code",
               "exemplar": false,
-              "expr": "sum_over_time((group by (_id) (alerts{_id=~\"$consumer_cluster.*\", alertname=~\"(CephMonQuorumLost|CephClusterErrorState)\", alertstate=\"firing\"}) or vector(0))[$__range:]) * 5/60",
+              "expr": "sum(group by (_id) (alerts{_id=~\"$consumer_cluster.*\", alertname=~\"(CephMonQuorumLost|CephClusterErrorState)\", alertstate=\"firing\"})) or vector(0)",
               "format": "time_series",
               "interval": "",
               "legendFormat": "{{label_name}}",
@@ -850,7 +870,7 @@ data:
             }
           ],
           "timeFrom": "now/M",
-          "title": "Clusters in breach (SLO: >=99.5% uptime)",
+          "title": "Clusters in breach",
           "type": "timeseries"
         }
       ],
@@ -927,7 +947,7 @@ data:
           },
           {
             "current": {
-              "selected": false,
+              "selected": true,
               "text": "telemeter-recent-stage",
               "value": "telemeter-recent-stage"
             },
@@ -954,7 +974,7 @@ data:
       "timezone": "",
       "title": "Managed Services - ODF Service Level Overview",
       "uid": "2kKW68e7k",
-      "version": 2,
+      "version": 4,
       "weekStart": ""
     }
 kind: ConfigMap
