@@ -4,7 +4,7 @@ function generate {
   cd source/"$1"/
   for dashboard in *; do
     dashboard=${dashboard%%.*}
-    out=../../configmaps/"$1"/${dashboard}.configmap.yaml
+    out=../../../configmaps/"$1"/${dashboard}.configmap.yaml
     kubectl create configmap ${dashboard} --from-file=${dashboard}.json -o yaml --dry-run=client > ${out}
 cat << EOF >> ${out}
   labels:
@@ -16,6 +16,8 @@ EOF
   cd -
 }
 
-generate stage
-generate production
+generate ODFMS/stage
+generate ODFMS/production
+generate RHDAS/stage
+generate RHDAS/production
 

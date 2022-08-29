@@ -1,0 +1,1706 @@
+apiVersion: v1
+data:
+  rhdas-ms-overview.json: |
+    {
+      "annotations": {
+        "list": [
+          {
+            "builtIn": 1,
+            "datasource": {
+              "type": "grafana",
+              "uid": "-- Grafana --"
+            },
+            "enable": true,
+            "hide": true,
+            "iconColor": "rgba(0, 211, 255, 1)",
+            "name": "Annotations & Alerts",
+            "target": {
+              "limit": 100,
+              "matchAny": false,
+              "tags": [],
+              "type": "dashboard"
+            },
+            "type": "dashboard"
+          }
+        ]
+      },
+      "description": "SLIs overview board for the Data Access Managed Service.",
+      "editable": true,
+      "fiscalYearStartMonth": 0,
+      "graphTooltip": 0,
+      "iteration": 1662022177838,
+      "links": [],
+      "liveNow": false,
+      "panels": [
+        {
+          "collapsed": true,
+          "gridPos": {
+            "h": 1,
+            "w": 24,
+            "x": 0,
+            "y": 0
+          },
+          "id": 42,
+          "panels": [
+            {
+              "gridPos": {
+                "h": 10,
+                "w": 24,
+                "x": 0,
+                "y": 1
+              },
+              "id": 20,
+              "options": {
+                "content": "\n# Data Federation Overview\n\nThis dashboard aims to convey various information regarding the MCG addon, on both fleet and granular (cluster) levels.\n\nThe variables below help us accomplish that. They are:\n- `Telemeter Datasource`: The Telemetry Datasource.\n- `RHOBS Datasource`: The RHOBS Datasource.\n- `Addon Variant`: Could be a combination of the following values:\n  - `addon-mcg-osd`: Production variant.\n  - `addon-mcg-osd-dev`: Developer variant.\n  - `addon-mcg-osd-qe`: QE variant.\n- `Cluster ID`: All cluster's based on the previous selections from the current time range.\n\nPing the `Data Federation` Google Space for any clarifications.",
+                "mode": "markdown"
+              },
+              "pluginVersion": "9.0.3",
+              "title": "Data Federation Overview",
+              "type": "text"
+            }
+          ],
+          "title": "General",
+          "type": "row"
+        },
+        {
+          "collapsed": false,
+          "gridPos": {
+            "h": 1,
+            "w": 24,
+            "x": 0,
+            "y": 1
+          },
+          "id": 4,
+          "panels": [],
+          "repeat": "addon_variant",
+          "repeatDirection": "h",
+          "title": "Fleet view: $addon_variant",
+          "type": "row"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${telemeter_datasource}"
+          },
+          "description": "The number of clusters with the addon subscription present.",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "mappings": [
+                {
+                  "options": {
+                    "match": "null",
+                    "result": {
+                      "index": 1,
+                      "text": "N/A"
+                    }
+                  },
+                  "type": "special"
+                }
+              ],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "text",
+                    "value": null
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 4,
+            "x": 0,
+            "y": 2
+          },
+          "id": 2,
+          "options": {
+            "colorMode": "value",
+            "graphMode": "none",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "text": {
+              "valueSize": 126
+            },
+            "textMode": "auto"
+          },
+          "pluginVersion": "9.0.3",
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${telemeter_datasource}"
+              },
+              "editorMode": "code",
+              "exemplar": false,
+              "expr": "count(subscription_sync_total{name=~\"addon-$addon_variant\"})",
+              "format": "table",
+              "instant": true,
+              "range": false,
+              "refId": "A"
+            }
+          ],
+          "title": "Cluster count",
+          "type": "stat"
+        },
+        {
+          "columns": [],
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${telemeter_datasource}"
+          },
+          "description": "The Cluster IDs for all clusters having the addon subscription (served from telemeter datasource).",
+          "fieldConfig": {
+            "defaults": {
+              "custom": {
+                "align": "center",
+                "displayMode": "auto",
+                "filterable": true,
+                "inspect": false
+              },
+              "mappings": [
+                {
+                  "options": {
+                    "0": {
+                      "index": 0,
+                      "text": "Healthy"
+                    },
+                    "1": {
+                      "index": 1,
+                      "text": "Warning"
+                    },
+                    "2": {
+                      "index": 2,
+                      "text": "Error"
+                    }
+                  },
+                  "type": "value"
+                }
+              ],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  }
+                ]
+              }
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Cluster"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 296
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "pod"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 263
+                  }
+                ]
+              }
+            ]
+          },
+          "fontSize": "100%",
+          "gridPos": {
+            "h": 8,
+            "w": 7,
+            "x": 4,
+            "y": 2
+          },
+          "id": 30,
+          "options": {
+            "footer": {
+              "fields": "",
+              "reducer": [
+                "sum"
+              ],
+              "show": false
+            },
+            "showHeader": true,
+            "sortBy": []
+          },
+          "pluginVersion": "9.0.3",
+          "showHeader": true,
+          "sort": {
+            "col": 0,
+            "desc": true
+          },
+          "styles": [
+            {
+              "alias": "Cluster",
+              "align": "auto",
+              "colors": [
+                "rgba(245, 54, 54, 0.9)",
+                "rgba(237, 129, 40, 0.89)",
+                "rgba(50, 172, 45, 0.97)"
+              ],
+              "dateFormat": "YYYY-MM-DD HH:mm:ss",
+              "decimals": 2,
+              "mappingType": 1,
+              "pattern": "Metric",
+              "thresholds": [],
+              "type": "string",
+              "unit": "short"
+            }
+          ],
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${telemeter_datasource}"
+              },
+              "editorMode": "code",
+              "exemplar": false,
+              "expr": "label_replace(subscription_sync_total{name=~\"addon-$addon_variant\"}, \"cluster_id\", \"$1\", \"_id\", \"(.+)\")",
+              "format": "table",
+              "instant": true,
+              "legendFormat": "__auto",
+              "range": false,
+              "refId": "A"
+            }
+          ],
+          "title": "Clusters",
+          "transform": "timeseries_aggregations",
+          "transformations": [
+            {
+              "id": "seriesToColumns",
+              "options": {
+                "byField": "cluster_id"
+              }
+            },
+            {
+              "id": "organize",
+              "options": {
+                "excludeByName": {
+                  "Time": true,
+                  "Value": true,
+                  "__name__": true,
+                  "_id": true,
+                  "channel": true,
+                  "container": true,
+                  "endpoint": true,
+                  "environment": true,
+                  "instance": true,
+                  "job": true,
+                  "name": true,
+                  "namespace": true,
+                  "origin": true,
+                  "package": true,
+                  "pod": true,
+                  "prometheus": true,
+                  "receive": true,
+                  "service": true,
+                  "tenant_id": true,
+                  "variant": true
+                },
+                "indexByName": {
+                  "Time": 1,
+                  "Value": 18,
+                  "__name__": 3,
+                  "_id": 4,
+                  "channel": 5,
+                  "cluster_id": 0,
+                  "container": 6,
+                  "endpoint": 7,
+                  "installed": 2,
+                  "instance": 8,
+                  "job": 9,
+                  "name": 10,
+                  "namespace": 11,
+                  "package": 12,
+                  "pod": 13,
+                  "prometheus": 14,
+                  "receive": 15,
+                  "service": 16,
+                  "tenant_id": 17
+                },
+                "renameByName": {
+                  "Value": "",
+                  "cluster_id": "Cluster",
+                  "environment": "Cluster Type",
+                  "installed": "Version",
+                  "variant": "Addon Flavour"
+                }
+              }
+            }
+          ],
+          "type": "table"
+        },
+        {
+          "columns": [],
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${telemeter_datasource}"
+          },
+          "description": "Shows the different versions of the addon installed across different clusters.",
+          "fieldConfig": {
+            "defaults": {
+              "custom": {
+                "align": "center",
+                "displayMode": "auto",
+                "inspect": false
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  }
+                ]
+              }
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Time"
+                },
+                "properties": [
+                  {
+                    "id": "custom.hidden",
+                    "value": true
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Value"
+                },
+                "properties": [
+                  {
+                    "id": "displayName",
+                    "value": "Installations"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "installed"
+                },
+                "properties": [
+                  {
+                    "id": "displayName",
+                    "value": "Version"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "installed"
+                },
+                "properties": [
+                  {
+                    "id": "mappings",
+                    "value": [
+                      {
+                        "options": {
+                          "match": "empty",
+                          "result": {
+                            "index": 0,
+                            "text": "N/A"
+                          }
+                        },
+                        "type": "special"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Version"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 213
+                  }
+                ]
+              }
+            ]
+          },
+          "fontSize": "100%",
+          "gridPos": {
+            "h": 8,
+            "w": 5,
+            "x": 11,
+            "y": 2
+          },
+          "id": 12,
+          "links": [],
+          "options": {
+            "footer": {
+              "fields": "",
+              "reducer": [
+                "sum"
+              ],
+              "show": false
+            },
+            "showHeader": true,
+            "sortBy": []
+          },
+          "pluginVersion": "9.0.3",
+          "repeatDirection": "h",
+          "showHeader": true,
+          "sort": {
+            "col": 0,
+            "desc": true
+          },
+          "styles": [
+            {
+              "alias": "Time",
+              "align": "auto",
+              "dateFormat": "YYYY-MM-DD HH:mm:ss",
+              "pattern": "Time",
+              "type": "hidden"
+            },
+            {
+              "alias": "Version",
+              "align": "",
+              "colors": [
+                "rgba(245, 54, 54, 0.9)",
+                "rgba(237, 129, 40, 0.89)",
+                "rgba(50, 172, 45, 0.97)"
+              ],
+              "decimals": 2,
+              "mappingType": 1,
+              "pattern": "Metric",
+              "preserveFormat": false,
+              "rangeMaps": [
+                {
+                  "from": "1",
+                  "text": "",
+                  "to": "1"
+                }
+              ],
+              "thresholds": [],
+              "type": "string",
+              "unit": "short",
+              "valueMaps": []
+            },
+            {
+              "alias": "Installations",
+              "align": "auto",
+              "colors": [
+                "rgba(245, 54, 54, 0.9)",
+                "rgba(237, 129, 40, 0.89)",
+                "rgba(50, 172, 45, 0.97)"
+              ],
+              "dateFormat": "YYYY-MM-DD HH:mm:ss",
+              "decimals": 0,
+              "mappingType": 1,
+              "pattern": "Value",
+              "thresholds": [],
+              "type": "number",
+              "unit": "short"
+            }
+          ],
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${telemeter_datasource}"
+              },
+              "editorMode": "code",
+              "expr": "sort(count by(installed) (subscription_sync_total{name=~\"addon-$addon_variant\", installed!~\"\"}))",
+              "format": "table",
+              "instant": true,
+              "interval": "",
+              "legendFormat": "__auto",
+              "refId": "A"
+            }
+          ],
+          "title": "Versions (installed)",
+          "transform": "timeseries_to_rows",
+          "transformations": [
+            {
+              "id": "seriesToRows",
+              "options": {}
+            }
+          ],
+          "type": "table"
+        },
+        {
+          "columns": [],
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${telemeter_datasource}"
+          },
+          "description": "Clusters with failed addon installations.",
+          "fieldConfig": {
+            "defaults": {
+              "custom": {
+                "align": "center",
+                "displayMode": "auto",
+                "inspect": false
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "text",
+                    "value": null
+                  }
+                ]
+              }
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "_id"
+                },
+                "properties": [
+                  {
+                    "id": "displayName",
+                    "value": "Cluster"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byRegexp",
+                  "options": "^(?!Cluster|version).*$"
+                },
+                "properties": [
+                  {
+                    "id": "custom.hidden",
+                    "value": true
+                  }
+                ]
+              }
+            ]
+          },
+          "fontSize": "100%",
+          "gridPos": {
+            "h": 8,
+            "w": 8,
+            "x": 16,
+            "y": 2
+          },
+          "id": 91,
+          "links": [],
+          "options": {
+            "footer": {
+              "fields": "",
+              "reducer": [
+                "sum"
+              ],
+              "show": false
+            },
+            "showHeader": true
+          },
+          "pluginVersion": "9.0.3",
+          "showHeader": true,
+          "sort": {
+            "col": 0,
+            "desc": true
+          },
+          "styles": [
+            {
+              "alias": "Clusters",
+              "align": "",
+              "dateFormat": "YYYY-MM-DD HH:mm:ss",
+              "link": false,
+              "mappingType": 1,
+              "pattern": "Metric",
+              "preserveFormat": false,
+              "sanitize": false,
+              "type": "string"
+            }
+          ],
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${telemeter_datasource}"
+              },
+              "editorMode": "code",
+              "expr": "(csv_succeeded{} + on(name) group_left() (count(label_replace(subscription_sync_total{name=~\"addon-$addon_variant\"}, \"name\", \"$1\", \"installed\", \"(.+)\")) by(name) * 0) == 0)",
+              "format": "table",
+              "hide": false,
+              "instant": true,
+              "interval": "",
+              "legendFormat": "__auto",
+              "refId": "A"
+            }
+          ],
+          "title": "Installations (failed)",
+          "transform": "timeseries_aggregations",
+          "type": "table"
+        },
+        {
+          "collapsed": false,
+          "gridPos": {
+            "h": 1,
+            "w": 24,
+            "x": 0,
+            "y": 10
+          },
+          "id": 54,
+          "panels": [],
+          "title": "Metrics",
+          "type": "row"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${rhobs_datasource}"
+          },
+          "description": "The current state of the NooBaa system in the selected cluster (served from RHOBS datasource).",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "custom": {
+                "align": "center",
+                "displayMode": "auto",
+                "filterable": true,
+                "inspect": false
+              },
+              "displayName": "",
+              "mappings": [
+                {
+                  "options": {
+                    "0": {
+                      "color": "dark-green",
+                      "index": 0,
+                      "text": "Healthy"
+                    },
+                    "1": {
+                      "color": "dark-yellow",
+                      "index": 1,
+                      "text": "Warning"
+                    },
+                    "2": {
+                      "color": "dark-red",
+                      "index": 2,
+                      "text": "Error"
+                    }
+                  },
+                  "type": "value"
+                },
+                {
+                  "options": {
+                    "match": "null",
+                    "result": {
+                      "color": "text",
+                      "index": 3,
+                      "text": "N/A"
+                    }
+                  },
+                  "type": "special"
+                }
+              ],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  }
+                ]
+              },
+              "unit": "none"
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byRegexp",
+                  "options": "^(?!(^Cluster$|^Cluster Type$|^Addon Flavour$|^Status$)).*$"
+                },
+                "properties": [
+                  {
+                    "id": "custom.hidden",
+                    "value": true
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "cluster_id"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 300
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 6,
+            "x": 0,
+            "y": 11
+          },
+          "id": 44,
+          "links": [],
+          "options": {
+            "footer": {
+              "fields": "",
+              "reducer": [
+                "sum"
+              ],
+              "show": false
+            },
+            "showHeader": true,
+            "sortBy": []
+          },
+          "pluginVersion": "9.0.3",
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${rhobs_datasource}"
+              },
+              "editorMode": "code",
+              "expr": "namespace:noobaa_system_health_status:max{origin=\"$origin\", cluster_id=~\"$cluster_id.*\", variant=~\"$addon_variant.*\"}",
+              "format": "table",
+              "instant": true,
+              "interval": "",
+              "legendFormat": "__auto",
+              "refId": "A"
+            }
+          ],
+          "title": "DF Service Status",
+          "transformations": [
+            {
+              "id": "organize",
+              "options": {
+                "excludeByName": {
+                  "environment": true,
+                  "variant": true
+                },
+                "indexByName": {},
+                "renameByName": {
+                  "Value": "Status",
+                  "cluster_id": "Cluster",
+                  "environment": "Cluster Type",
+                  "origin": "",
+                  "variant": "Addon Flavour"
+                }
+              }
+            }
+          ],
+          "type": "table"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${rhobs_datasource}"
+          },
+          "description": "The usage of the Cache Bucket in the selected cluster(s).",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "custom": {
+                "align": "center",
+                "displayMode": "auto",
+                "filterable": true,
+                "inspect": false
+              },
+              "displayName": "",
+              "mappings": [
+                {
+                  "options": {
+                    "match": "null",
+                    "result": {
+                      "color": "text",
+                      "index": 0,
+                      "text": "N/A"
+                    }
+                  },
+                  "type": "special"
+                }
+              ],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  }
+                ]
+              },
+              "unit": "decbytes"
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byRegexp",
+                  "options": "^(?!(^Cluster$|^Cluster Type$|^Addon Flavour$|^Usage$)).*$"
+                },
+                "properties": [
+                  {
+                    "id": "custom.hidden",
+                    "value": false
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Cluster"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 296
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 6,
+            "x": 6,
+            "y": 11
+          },
+          "id": 50,
+          "links": [],
+          "options": {
+            "footer": {
+              "fields": "",
+              "reducer": [
+                "sum"
+              ],
+              "show": false
+            },
+            "showHeader": true,
+            "sortBy": []
+          },
+          "pluginVersion": "9.0.3",
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${rhobs_datasource}"
+              },
+              "expr": "namespace:noobaa_usage:max{origin=\"$origin\", cluster_id=~\"$cluster_id.*\", variant=~\"$addon_variant.*\"}",
+              "format": "table",
+              "instant": true,
+              "interval": "",
+              "legendFormat": "",
+              "refId": "A"
+            }
+          ],
+          "title": "Cache Bucket usage",
+          "transformations": [
+            {
+              "id": "organize",
+              "options": {
+                "excludeByName": {
+                  "Time": true,
+                  "__name__": true,
+                  "environment": true,
+                  "origin": true,
+                  "prometheus": true,
+                  "receive": true,
+                  "tenant_id": true,
+                  "variant": true
+                },
+                "indexByName": {},
+                "renameByName": {
+                  "Value": "Usage",
+                  "cluster_id": "Cluster",
+                  "environment": "Cluster Type",
+                  "variant": "Addon Flavour"
+                }
+              }
+            },
+            {
+              "id": "sortBy",
+              "options": {
+                "fields": {},
+                "sort": [
+                  {
+                    "desc": true,
+                    "field": "Usage"
+                  }
+                ]
+              }
+            }
+          ],
+          "type": "table"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${rhobs_datasource}"
+          },
+          "description": "The status of the Data Sources for the selected cluster(s).",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                }
+              },
+              "decimals": 0,
+              "mappings": [],
+              "unit": "none"
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Healthy "
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "green",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Unhealthy "
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "red",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 6,
+            "x": 12,
+            "y": 11
+          },
+          "id": 63,
+          "links": [],
+          "options": {
+            "displayLabels": [
+              "value"
+            ],
+            "legend": {
+              "calcs": [],
+              "displayMode": "hidden",
+              "placement": "bottom",
+              "values": [
+                "value"
+              ]
+            },
+            "pieType": "pie",
+            "reduceOptions": {
+              "calcs": [
+                "last"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${rhobs_datasource}"
+              },
+              "editorMode": "code",
+              "exemplar": false,
+              "expr": "sum(namespace:noobaa_namespace_resources:max{origin=\"$origin\", cluster_id=~\"$cluster_id.*\", variant=~\"$addon_variant.*\"} - namespace:noobaa_unhealthy_namespace_resources:max{origin=\"$origin\", cluster_id=~\"$cluster_id.*\", variant=~\"$addon_variant.*\"})",
+              "format": "time_series",
+              "instant": true,
+              "interval": "",
+              "legendFormat": "Healthy {{Value}}",
+              "range": false,
+              "refId": "A"
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${rhobs_datasource}"
+              },
+              "editorMode": "code",
+              "exemplar": false,
+              "expr": "sum(namespace:noobaa_unhealthy_namespace_resources:max{origin=\"$origin\", cluster_id=~\"$cluster_id.*\"})",
+              "hide": false,
+              "instant": true,
+              "legendFormat": "Unhealthy {{Value}}",
+              "range": false,
+              "refId": "B"
+            }
+          ],
+          "title": "Data Sources",
+          "type": "piechart"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${rhobs_datasource}"
+          },
+          "description": "The status of the Bucket Policy in the selected cluster(s). This is same as the number of Object Bucket Claims that were created.",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                }
+              },
+              "decimals": 0,
+              "mappings": [],
+              "unit": "short"
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Healthy "
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "green",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Unhealthy "
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "red",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 6,
+            "x": 18,
+            "y": 11
+          },
+          "id": 66,
+          "links": [],
+          "options": {
+            "displayLabels": [
+              "value"
+            ],
+            "legend": {
+              "calcs": [],
+              "displayMode": "hidden",
+              "placement": "bottom",
+              "sortBy": "Value",
+              "sortDesc": true,
+              "values": [
+                "value"
+              ]
+            },
+            "pieType": "pie",
+            "reduceOptions": {
+              "calcs": [
+                "last"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${rhobs_datasource}"
+              },
+              "editorMode": "code",
+              "exemplar": false,
+              "expr": "sum(namespace:noobaa_namespace_buckets:max{origin=\"$origin\", cluster_id=~\"$cluster_id.*\", variant=~\"$addon_variant.*\"} - namespace:noobaa_unhealthy_namespace_buckets:max{origin=\"$origin\", cluster_id=~\"$cluster_id.*\", variant=~\"$addon_variant.*\"})",
+              "instant": true,
+              "interval": "",
+              "legendFormat": "Healthy {{Value}}",
+              "range": false,
+              "refId": "A"
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${rhobs_datasource}"
+              },
+              "editorMode": "code",
+              "exemplar": false,
+              "expr": "sum(namespace:noobaa_unhealthy_namespace_buckets:max{origin=\"$origin\", cluster_id=~\"$cluster_id.*\"})",
+              "hide": false,
+              "instant": true,
+              "legendFormat": "Unhealthy {{Value}}",
+              "range": false,
+              "refId": "B"
+            }
+          ],
+          "title": "Bucket Policy ",
+          "type": "piechart"
+        },
+        {
+          "collapsed": false,
+          "gridPos": {
+            "h": 1,
+            "w": 24,
+            "x": 0,
+            "y": 19
+          },
+          "id": 90,
+          "panels": [],
+          "title": "Alerts",
+          "type": "row"
+        },
+        {
+          "columns": [],
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${rhobs_datasource}"
+          },
+          "description": "All alerts specific to the RHDAS managed service offering.",
+          "fieldConfig": {
+            "defaults": {
+              "custom": {
+                "align": "center",
+                "displayMode": "auto",
+                "filterable": true,
+                "inspect": false
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  }
+                ]
+              }
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Cluster"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 374
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Alert"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 297
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Time"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 207
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Severity"
+                },
+                "properties": [
+                  {
+                    "id": "mappings",
+                    "value": [
+                      {
+                        "options": {
+                          "critical": {
+                            "index": 0,
+                            "text": "Critical"
+                          },
+                          "info": {
+                            "index": 2,
+                            "text": "Info"
+                          },
+                          "warning": {
+                            "index": 1,
+                            "text": "Warning"
+                          }
+                        },
+                        "type": "value"
+                      },
+                      {
+                        "options": {
+                          "match": "empty",
+                          "result": {
+                            "index": 3,
+                            "text": "None"
+                          }
+                        },
+                        "type": "special"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Bucket Policy"
+                },
+                "properties": [
+                  {
+                    "id": "noValue",
+                    "value": "N/A"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Data Source"
+                },
+                "properties": [
+                  {
+                    "id": "noValue",
+                    "value": "N/A"
+                  }
+                ]
+              }
+            ]
+          },
+          "fontSize": "100%",
+          "gridPos": {
+            "h": 7,
+            "w": 24,
+            "x": 0,
+            "y": 20
+          },
+          "hideTimeOverride": false,
+          "id": 92,
+          "options": {
+            "footer": {
+              "fields": "",
+              "reducer": [
+                "sum"
+              ],
+              "show": false
+            },
+            "showHeader": true,
+            "sortBy": []
+          },
+          "pluginVersion": "9.0.3",
+          "showHeader": true,
+          "sort": {
+            "col": 0,
+            "desc": true
+          },
+          "styles": [
+            {
+              "alias": "Time",
+              "align": "auto",
+              "dateFormat": "MM/DD/YY h:mm:ss a",
+              "pattern": "Time",
+              "type": "date"
+            },
+            {
+              "alias": "Cluster",
+              "align": "auto",
+              "colors": [
+                "rgba(245, 54, 54, 0.9)",
+                "rgba(237, 129, 40, 0.89)",
+                "rgba(50, 172, 45, 0.97)"
+              ],
+              "dateFormat": "YYYY-MM-DD HH:mm:ss",
+              "decimals": 0,
+              "mappingType": 1,
+              "pattern": "_id",
+              "thresholds": [],
+              "type": "number",
+              "unit": "short"
+            },
+            {
+              "alias": "Severity",
+              "align": "auto",
+              "colors": [
+                "rgba(245, 54, 54, 0.9)",
+                "rgba(237, 129, 40, 0.89)",
+                "rgba(50, 172, 45, 0.97)"
+              ],
+              "dateFormat": "YYYY-MM-DD HH:mm:ss",
+              "decimals": 0,
+              "mappingType": 1,
+              "pattern": "severity",
+              "thresholds": [],
+              "type": "number",
+              "unit": "short"
+            },
+            {
+              "alias": "Alert",
+              "align": "auto",
+              "colors": [
+                "rgba(245, 54, 54, 0.9)",
+                "rgba(237, 129, 40, 0.89)",
+                "rgba(50, 172, 45, 0.97)"
+              ],
+              "dateFormat": "YYYY-MM-DD HH:mm:ss",
+              "decimals": 2,
+              "mappingType": 1,
+              "pattern": "alertname",
+              "thresholds": [],
+              "type": "number",
+              "unit": "short"
+            },
+            {
+              "alias": "",
+              "align": "auto",
+              "colors": [
+                "rgba(245, 54, 54, 0.9)",
+                "rgba(237, 129, 40, 0.89)",
+                "rgba(50, 172, 45, 0.97)"
+              ],
+              "dateFormat": "YYYY-MM-DD HH:mm:ss",
+              "decimals": 2,
+              "mappingType": 1,
+              "pattern": "/Value|__name__|alertstate|endpoint|namespace|pod|job|prometheus|service|tenant_id|container|receive/",
+              "thresholds": [],
+              "type": "hidden",
+              "unit": "short"
+            }
+          ],
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${rhobs_datasource}"
+              },
+              "editorMode": "code",
+              "exemplar": false,
+              "expr": "ALERTS{cluster_id=~\"$cluster_id\", origin=\"$origin\", variant=~\"$addon_variant\"}",
+              "format": "table",
+              "hide": false,
+              "instant": true,
+              "legendFormat": "__auto",
+              "range": false,
+              "refId": "B"
+            }
+          ],
+          "title": "Red Hat Data Access Service Alerts",
+          "transform": "table",
+          "transformations": [
+            {
+              "id": "sortBy",
+              "options": {
+                "fields": {},
+                "sort": [
+                  {
+                    "desc": false,
+                    "field": "severity"
+                  }
+                ]
+              }
+            },
+            {
+              "id": "organize",
+              "options": {
+                "excludeByName": {
+                  "Time": false,
+                  "Value": true,
+                  "__name__": true,
+                  "_id": true,
+                  "alertstate": false,
+                  "channel": true,
+                  "cluster_id": false,
+                  "container": true,
+                  "endpoint": true,
+                  "environment": true,
+                  "group": true,
+                  "instance": true,
+                  "job": true,
+                  "namespace": true,
+                  "origin": true,
+                  "pod": true,
+                  "policy_level": true,
+                  "prometheus": true,
+                  "receive": true,
+                  "resource": true,
+                  "service": true,
+                  "tenant_id": true,
+                  "upstream": true,
+                  "variant": false,
+                  "version": true
+                },
+                "indexByName": {
+                  "Time": 0,
+                  "Value": 13,
+                  "__name__": 8,
+                  "alertname": 3,
+                  "alertstate": 7,
+                  "bucket_name": 4,
+                  "cluster_id": 2,
+                  "container": 14,
+                  "endpoint": 15,
+                  "environment": 16,
+                  "instance": 17,
+                  "job": 18,
+                  "namespace": 9,
+                  "namespace_resource_name": 5,
+                  "origin": 19,
+                  "pod": 20,
+                  "prometheus": 10,
+                  "receive": 11,
+                  "service": 21,
+                  "severity": 6,
+                  "tenant_id": 12,
+                  "variant": 1
+                },
+                "renameByName": {
+                  "_id": "",
+                  "alertname": "Alert",
+                  "alertstate": "Status",
+                  "bucket_name": "Bucket Policy",
+                  "cluster_id": "Cluster",
+                  "namespace_resource_name": "Data Source",
+                  "severity": "Severity",
+                  "variant": "Addon Flavour"
+                }
+              }
+            }
+          ],
+          "type": "table"
+        }
+      ],
+      "refresh": false,
+      "schemaVersion": 36,
+      "style": "dark",
+      "tags": [
+        "managed-services",
+        "rhdas",
+        "data-access-service"
+      ],
+      "templating": {
+        "list": [
+          {
+            "current": {
+              "selected": false,
+              "text": "telemeter-recent-stage",
+              "value": "telemeter-recent-stage"
+            },
+            "hide": 0,
+            "includeAll": false,
+            "label": "Telemeter Datasource",
+            "multi": false,
+            "name": "telemeter_datasource",
+            "options": [],
+            "query": "prometheus",
+            "queryValue": "",
+            "refresh": 1,
+            "regex": "telemeter-recent-.*",
+            "skipUrlSync": false,
+            "type": "datasource"
+          },
+          {
+            "current": {
+              "selected": false,
+              "text": "odfms-observatorium-stage",
+              "value": "odfms-observatorium-stage"
+            },
+            "description": "",
+            "hide": 0,
+            "includeAll": false,
+            "label": "RHOBS Datasource",
+            "multi": false,
+            "name": "rhobs_datasource",
+            "options": [],
+            "query": "prometheus",
+            "queryValue": "",
+            "refresh": 1,
+            "regex": "odfms-observatorium-.*",
+            "skipUrlSync": false,
+            "type": "datasource"
+          },
+          {
+            "allValue": ".*",
+            "current": {
+              "selected": false,
+              "text": "All",
+              "value": "$__all"
+            },
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${rhobs_datasource}"
+            },
+            "definition": "label_values(namespace:noobaa_system_health_status:max, variant)",
+            "hide": 0,
+            "includeAll": true,
+            "label": "Addon Variant",
+            "multi": false,
+            "name": "addon_variant",
+            "options": [],
+            "query": {
+              "query": "label_values(namespace:noobaa_system_health_status:max, variant)",
+              "refId": "StandardVariableQuery"
+            },
+            "refresh": 2,
+            "regex": "/mcg-.*/",
+            "skipUrlSync": false,
+            "sort": 0,
+            "type": "query"
+          },
+          {
+            "allValue": ".*",
+            "current": {
+              "selected": false,
+              "text": "All",
+              "value": "$__all"
+            },
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${rhobs_datasource}"
+            },
+            "definition": "label_values(namespace:noobaa_system_health_status:max, cluster_id)",
+            "hide": 0,
+            "includeAll": true,
+            "label": "Cluster ID",
+            "multi": false,
+            "name": "cluster_id",
+            "options": [],
+            "query": {
+              "query": "label_values(namespace:noobaa_system_health_status:max, cluster_id)",
+              "refId": "StandardVariableQuery"
+            },
+            "refresh": 1,
+            "regex": "",
+            "skipUrlSync": false,
+            "sort": 1,
+            "type": "query"
+          },
+          {
+            "hide": 2,
+            "label": "origin",
+            "name": "origin",
+            "query": "data-federation-service",
+            "skipUrlSync": false,
+            "type": "constant"
+          },
+          {
+            "hide": 2,
+            "label": "Namespace",
+            "name": "namespace",
+            "query": "redhat-data-federation",
+            "skipUrlSync": false,
+            "type": "constant"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${rhobs_datasource}"
+            },
+            "filters": [],
+            "hide": 0,
+            "name": "Filters",
+            "skipUrlSync": false,
+            "type": "adhoc"
+          }
+        ]
+      },
+      "time": {
+        "from": "now-1h",
+        "to": "now"
+      },
+      "timepicker": {},
+      "timezone": "browser",
+      "title": "Managed Services - Red Hat Data Access Service Overview",
+      "uid": "wG098Zm4z",
+      "version": 75,
+      "weekStart": ""
+    }
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: rhdas-ms-overview
+  labels:
+    grafana_dashboard: "true"
+  annotations:
+    grafana-folder: /grafana-dashboard-definitions/Addons
